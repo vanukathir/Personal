@@ -22,6 +22,73 @@ public class ListArrays {
         arr = new int[] {9,8,7,6,5,4,3,2,1,0};
         result = la.validMountainArray(arr);
         System.out.println(result);
+
+        System.out.println("#######################");
+        System.out.println("sort Array By Parity");
+        arr = new int[] {0,1,2};
+        arr = la.sortArrayByParity(arr);
+        System.out.println(Arrays.toString(arr));
+        System.out.println("############################");
+        System.out.println("max-consecutive-ones-ii");
+        arr = new int[] {1,1,1,0,1,1,1,1,1,0,1,1,1,1,1};
+        int val = la.findMaxConsecutiveOnes(arr);
+        System.out.println(val);
+
+        System.out.println("########################");
+        arr = new int[]{2,2,3,1};
+        val  = la.thirdMax(arr);
+        System.out.println("third Max No:"+ val);
+    }
+
+    public int thirdMax(int[] nums) {
+        int firstMax = Integer.MIN_VALUE,secondMax = Integer.MIN_VALUE, thirdMax = Integer.MIN_VALUE;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i] > firstMax ){
+                thirdMax = secondMax;
+                secondMax = firstMax;
+                firstMax = nums[i];
+            }else if(nums[i] > secondMax && nums[i] != firstMax){
+                thirdMax = secondMax;
+                secondMax = nums[i];
+            }else if(nums[i] > thirdMax && nums[i] != firstMax && nums[i] != secondMax){
+                thirdMax = nums[i];
+            }
+        }
+        System.out.println("first Max:"+firstMax);
+        System.out.println("secondMax:"+secondMax);
+        System.out.println("thirdmax:"+thirdMax);
+        return (thirdMax !=0) ? thirdMax : (firstMax != 0)? firstMax: -1;
+
+    }
+    public int findMaxConsecutiveOnes(int[] nums) {
+        int left = 0, right =0 , maxZero = 0 , count = 0;
+        while(right < nums.length){
+            if(nums[right] == 0)
+                maxZero++;
+            while(maxZero == 2) {
+                if(nums[left] == 0)
+                    maxZero--;
+                left++;
+            }
+            right++;
+            count = Math.max(count, right - left);
+        }
+        return count;
+    }
+    public int[] sortArrayByParity(int[] nums) {
+        int oddIndex = 0, evenIndex = 0;
+        while(evenIndex < nums.length ){
+            if(nums[evenIndex] % 2 == 0) {
+                int temp = nums[evenIndex];
+                nums[evenIndex] = nums[oddIndex];
+                nums[oddIndex] = temp;
+                oddIndex++;
+                evenIndex++;
+            }else {
+                evenIndex++;
+            }
+        }
+        return nums;
     }
 
     public boolean validMountainArray(int[] arr) {
