@@ -81,18 +81,41 @@ public class Operations {
 
     public static void main(String[] args){
         Operations obj = new Operations();
-        obj.list = obj.insertBegin(2);
-        obj.list = obj.insertLast(3);
-        obj.list = obj.insertBegin(1);
-        obj.list = obj.insertLast(10);
-        obj.list = obj.insertMiddle(13);
-
+        obj.list = obj.insertBegin(6);
+        obj.list = obj.insertLast(2);
+        obj.list = obj.insertBegin(3);
+        obj.list = obj.insertLast(6);
         obj.list = obj.insertMiddle(4);
-        obj.list = obj.insertAfternth(7,6);
+
+        obj.list = obj.insertMiddle(5);
+        obj.list = obj.insertAfternth(6,6);
         obj.printList(obj.list);
-        obj.list = obj.deleteFirst(obj.list);
+      /*  obj.list = obj.deleteFirst(obj.list);
         obj.list = obj.deleteLast();
         obj.list = obj.deleteMiddle();
+        obj.printList(obj.list);*/
+
+
+        // remove elemetns recursively;
+        obj.list = obj.removeElements(obj.list,6);
         obj.printList(obj.list);
     }
+
+    public Node removeElements(Node head, int val) {
+        if(head == null)
+            return head;
+        else if(head.next!=null && head.next.data == val){
+            head.next = head.next.next;
+            Node node = removeElements(head, val);
+        }else{
+            Node node = removeElements(head.next, val);
+        }
+
+        if(head != null && head.data == val){
+            head = head.next;
+        }
+        return head;
+    }
+
+
 }
